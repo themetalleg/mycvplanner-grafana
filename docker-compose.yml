@@ -1,0 +1,17 @@
+services:
+  grafana:
+    image: grafana/grafana-oss:latest
+    container_name: mycvplanner-grafana
+    restart: unless-stopped
+    env_file:
+      - .env
+    ports:
+      - "3300:3000"
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./provisioning:/etc/grafana/provisioning:ro
+      - ./deploy/branding/grafana-favicon-yellow/fav32.png:/usr/share/grafana/public/build/img/fav32.png:ro
+      - ./deploy/branding/grafana-favicon-yellow/apple-touch-icon.png:/usr/share/grafana/public/build/img/apple-touch-icon.png:ro
+
+volumes:
+  grafana-data:
