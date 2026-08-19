@@ -5,13 +5,43 @@ services:
     restart: unless-stopped
     env_file:
       - .env
+    environment:
+      GF_INSTALL_PLUGINS: ${GF_INSTALL_PLUGINS:-frser-sqlite-datasource}
     ports:
       - "3300:3000"
+    depends_on:
+      - prometheus
     volumes:
       - grafana-data:/var/lib/grafana
       - ./provisioning:/etc/grafana/provisioning:ro
+      - ${MYCVPLANNER_PLATFORM_DB_PATH:-/home/rob/Python/mycvplanner-platform/db.sqlite3}:/var/lib/mycvplanner-platform/db.sqlite3:ro
       - ./deploy/branding/grafana-favicon-yellow/fav32.png:/usr/share/grafana/public/build/img/fav32.png:ro
       - ./deploy/branding/grafana-favicon-yellow/apple-touch-icon.png:/usr/share/grafana/public/build/img/apple-touch-icon.png:ro
 
+  prometheus:
+    image: prom/prometheus:v2.54.1
+    container_name: mycvplanner-prometheus
+    restart: unless-stopped
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --storage.tsdb.path=/prometheus
+      - --web.enable-lifecycle
+    volumes:
+      - ./provisioning/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus-data:/prometheus
+    depends_on:
+      - node-exporter
+
+  node-exporter:
+    image: prom/node-exporter:v1.8.2
+    container_name: mycvplanner-node-exporter
+    restart: unless-stopped
+    command:
+      - --path.rootfs=/host
+      - --collector.filesystem.mount-points-exclude=^/(dev|proc|sys|var/lib/docker/.+|var/lib/containers/storage/.+)($|/)
+    volumes:
+      - /:/host:ro,rslave
+
 volumes:
   grafana-data:
+  prometheus-data:

@@ -1,0 +1,614 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "platform-sqlite"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 6,
+        "x": 0,
+        "y": 0
+      },
+      "id": 1,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.1.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "frser-sqlite-datasource",
+            "uid": "platform-sqlite"
+          },
+          "queryType": "table",
+          "rawQueryText": "SELECT COUNT(*) AS value FROM auth_user;",
+          "queryText": "SELECT COUNT(*) AS value FROM auth_user;",
+          "timeColumns": [],
+          "refId": "A"
+        }
+      ],
+      "title": "Current registered users",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "platform-sqlite"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 6,
+        "x": 6,
+        "y": 0
+      },
+      "id": 2,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.1.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "frser-sqlite-datasource",
+            "uid": "platform-sqlite"
+          },
+          "queryType": "table",
+          "rawQueryText": "SELECT COUNT(*) AS value FROM home_purchaserecord WHERE status = 'completed' AND price_chf > 0 AND (billing_cycle = 'one-time' OR cancelled_at IS NULL);",
+          "queryText": "SELECT COUNT(*) AS value FROM home_purchaserecord WHERE status = 'completed' AND price_chf > 0 AND (billing_cycle = 'one-time' OR cancelled_at IS NULL);",
+          "timeColumns": [],
+          "refId": "A"
+        }
+      ],
+      "title": "Active users (sum)",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "platform-sqlite"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 6,
+        "x": 12,
+        "y": 0
+      },
+      "id": 3,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.1.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "frser-sqlite-datasource",
+            "uid": "platform-sqlite"
+          },
+          "queryType": "table",
+          "rawQueryText": "SELECT COUNT(*) AS value FROM home_purchaserecord WHERE status = 'completed' AND price_chf > 0 AND billing_cycle <> 'one-time' AND cancelled_at IS NULL;",
+          "queryText": "SELECT COUNT(*) AS value FROM home_purchaserecord WHERE status = 'completed' AND price_chf > 0 AND billing_cycle <> 'one-time' AND cancelled_at IS NULL;",
+          "timeColumns": [],
+          "refId": "A"
+        }
+      ],
+      "title": "Amount of monthly payments",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "platform-sqlite"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 6,
+        "x": 18,
+        "y": 0
+      },
+      "id": 4,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.1.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "frser-sqlite-datasource",
+            "uid": "platform-sqlite"
+          },
+          "queryType": "table",
+          "rawQueryText": "SELECT COUNT(*) AS value FROM home_purchaserecord WHERE status = 'completed' AND price_chf > 0 AND billing_cycle = 'one-time';",
+          "queryText": "SELECT COUNT(*) AS value FROM home_purchaserecord WHERE status = 'completed' AND price_chf > 0 AND billing_cycle = 'one-time';",
+          "timeColumns": [],
+          "refId": "A"
+        }
+      ],
+      "title": "Amount of one-time payments",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "platform-sqlite"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 16,
+            "gradientMode": "opacity",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "smooth",
+            "lineWidth": 2,
+            "pointSize": 4,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 24,
+        "x": 0,
+        "y": 5
+      },
+      "id": 5,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "11.1.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "frser-sqlite-datasource",
+            "uid": "platform-sqlite"
+          },
+          "queryType": "table",
+          "rawQueryText": "WITH RECURSIVE\n  bounds AS (\n    SELECT MIN(day) AS start_day\n    FROM (\n      SELECT DATE(created_at) AS day FROM home_purchaserecord\n    )\n  ),\n  calendar(day) AS (\n    SELECT COALESCE((SELECT start_day FROM bounds), DATE('now'))\n    UNION ALL\n    SELECT DATE(day, '+1 day')\n    FROM calendar\n    WHERE day < DATE('now')\n  )\nSELECT\n  calendar.day || 'T00:00:00Z' AS time,\n  COUNT(*) AS \"Active users (sum)\"\nFROM calendar\nJOIN home_purchaserecord AS purchase\n  ON purchase.status = 'completed'\n  AND purchase.price_chf > 0\n  AND DATE(purchase.created_at) <= calendar.day\n  AND (purchase.billing_cycle = 'one-time' OR purchase.cancelled_at IS NULL OR DATE(purchase.cancelled_at) > calendar.day)\nGROUP BY calendar.day\nORDER BY time ASC;",
+          "queryText": "WITH RECURSIVE\n  bounds AS (\n    SELECT MIN(day) AS start_day\n    FROM (\n      SELECT DATE(created_at) AS day FROM home_purchaserecord\n    )\n  ),\n  calendar(day) AS (\n    SELECT COALESCE((SELECT start_day FROM bounds), DATE('now'))\n    UNION ALL\n    SELECT DATE(day, '+1 day')\n    FROM calendar\n    WHERE day < DATE('now')\n  )\nSELECT\n  calendar.day || 'T00:00:00Z' AS time,\n  COUNT(*) AS \"Active users (sum)\"\nFROM calendar\nJOIN home_purchaserecord AS purchase\n  ON purchase.status = 'completed'\n  AND purchase.price_chf > 0\n  AND DATE(purchase.created_at) <= calendar.day\n  AND (purchase.billing_cycle = 'one-time' OR purchase.cancelled_at IS NULL OR DATE(purchase.cancelled_at) > calendar.day)\nGROUP BY calendar.day\nORDER BY time ASC;",
+          "timeColumns": [
+            "time"
+          ],
+          "refId": "A"
+        }
+      ],
+      "title": "Active users over time",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "platform-sqlite"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 16,
+            "gradientMode": "opacity",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "smooth",
+            "lineWidth": 2,
+            "pointSize": 4,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 24,
+        "x": 0,
+        "y": 15
+      },
+      "id": 7,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "11.1.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "frser-sqlite-datasource",
+            "uid": "platform-sqlite"
+          },
+          "queryType": "table",
+          "rawQueryText": "WITH RECURSIVE\n  bounds AS (\n    SELECT MIN(DATE(created_at)) AS start_day\n    FROM home_purchaserecord\n    WHERE billing_cycle <> 'one-time'\n  ),\n  calendar(day) AS (\n    SELECT COALESCE((SELECT start_day FROM bounds), DATE('now'))\n    UNION ALL\n    SELECT DATE(day, '+1 day')\n    FROM calendar\n    WHERE day < DATE('now')\n  )\nSELECT\n  calendar.day || 'T00:00:00Z' AS time,\n  COUNT(*) AS \"Subscriptions\"\nFROM calendar\nJOIN home_purchaserecord AS purchase\n  ON purchase.status = 'completed'\n  AND purchase.price_chf > 0\n  AND purchase.billing_cycle <> 'one-time'\n  AND DATE(purchase.created_at) <= calendar.day\n  AND (purchase.cancelled_at IS NULL OR DATE(purchase.cancelled_at) > calendar.day)\nGROUP BY calendar.day\nORDER BY time ASC;",
+          "queryText": "WITH RECURSIVE\n  bounds AS (\n    SELECT MIN(DATE(created_at)) AS start_day\n    FROM home_purchaserecord\n    WHERE billing_cycle <> 'one-time'\n  ),\n  calendar(day) AS (\n    SELECT COALESCE((SELECT start_day FROM bounds), DATE('now'))\n    UNION ALL\n    SELECT DATE(day, '+1 day')\n    FROM calendar\n    WHERE day < DATE('now')\n  )\nSELECT\n  calendar.day || 'T00:00:00Z' AS time,\n  COUNT(*) AS \"Subscriptions\"\nFROM calendar\nJOIN home_purchaserecord AS purchase\n  ON purchase.status = 'completed'\n  AND purchase.price_chf > 0\n  AND purchase.billing_cycle <> 'one-time'\n  AND DATE(purchase.created_at) <= calendar.day\n  AND (purchase.cancelled_at IS NULL OR DATE(purchase.cancelled_at) > calendar.day)\nGROUP BY calendar.day\nORDER BY time ASC;",
+          "timeColumns": [
+            "time"
+          ],
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "frser-sqlite-datasource",
+            "uid": "platform-sqlite"
+          },
+          "queryType": "table",
+          "rawQueryText": "WITH RECURSIVE\n  bounds AS (\n    SELECT MIN(DATE(created_at)) AS start_day\n    FROM home_purchaserecord\n    WHERE billing_cycle = 'one-time'\n  ),\n  calendar(day) AS (\n    SELECT COALESCE((SELECT start_day FROM bounds), DATE('now'))\n    UNION ALL\n    SELECT DATE(day, '+1 day')\n    FROM calendar\n    WHERE day < DATE('now')\n  )\nSELECT\n  calendar.day || 'T00:00:00Z' AS time,\n  COUNT(*) AS \"One-time payments\"\nFROM calendar\nJOIN home_purchaserecord AS purchase\n  ON purchase.status = 'completed'\n  AND purchase.price_chf > 0\n  AND purchase.billing_cycle = 'one-time'\n  AND DATE(purchase.created_at) <= calendar.day\nGROUP BY calendar.day\nORDER BY time ASC;",
+          "queryText": "WITH RECURSIVE\n  bounds AS (\n    SELECT MIN(DATE(created_at)) AS start_day\n    FROM home_purchaserecord\n    WHERE billing_cycle = 'one-time'\n  ),\n  calendar(day) AS (\n    SELECT COALESCE((SELECT start_day FROM bounds), DATE('now'))\n    UNION ALL\n    SELECT DATE(day, '+1 day')\n    FROM calendar\n    WHERE day < DATE('now')\n  )\nSELECT\n  calendar.day || 'T00:00:00Z' AS time,\n  COUNT(*) AS \"One-time payments\"\nFROM calendar\nJOIN home_purchaserecord AS purchase\n  ON purchase.status = 'completed'\n  AND purchase.price_chf > 0\n  AND purchase.billing_cycle = 'one-time'\n  AND DATE(purchase.created_at) <= calendar.day\nGROUP BY calendar.day\nORDER BY time ASC;",
+          "timeColumns": [
+            "time"
+          ],
+          "refId": "B"
+        }
+      ],
+      "title": "Subscriptions and one-time payments over time",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "platform-sqlite"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "CHF",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "bars",
+            "fillOpacity": 80,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "currencyCHF"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 24,
+        "x": 0,
+        "y": 25
+      },
+      "id": 6,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "11.1.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "frser-sqlite-datasource",
+            "uid": "platform-sqlite"
+          },
+          "queryType": "table",
+          "rawQueryText": "SELECT\n  STRFTIME('%Y-%m-01T00:00:00Z', created_at) AS time,\n  ROUND(SUM(price_chf), 2) AS \"Monthly and recurring payments\"\nFROM home_purchaserecord\nWHERE status = 'completed'\n  AND price_chf > 0\n  AND billing_cycle <> 'one-time'\nGROUP BY 1\nORDER BY 1 ASC;",
+          "queryText": "SELECT\n  STRFTIME('%Y-%m-01T00:00:00Z', created_at) AS time,\n  ROUND(SUM(price_chf), 2) AS \"Monthly and recurring payments\"\nFROM home_purchaserecord\nWHERE status = 'completed'\n  AND price_chf > 0\n  AND billing_cycle <> 'one-time'\nGROUP BY 1\nORDER BY 1 ASC;",
+          "timeColumns": [
+            "time"
+          ],
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "frser-sqlite-datasource",
+            "uid": "platform-sqlite"
+          },
+          "queryType": "table",
+          "rawQueryText": "SELECT\n  STRFTIME('%Y-%m-01T00:00:00Z', created_at) AS time,\n  ROUND(SUM(price_chf), 2) AS \"One-time payments\"\nFROM home_purchaserecord\nWHERE status = 'completed'\n  AND price_chf > 0\n  AND billing_cycle = 'one-time'\nGROUP BY 1\nORDER BY 1 ASC;",
+          "queryText": "SELECT\n  STRFTIME('%Y-%m-01T00:00:00Z', created_at) AS time,\n  ROUND(SUM(price_chf), 2) AS \"One-time payments\"\nFROM home_purchaserecord\nWHERE status = 'completed'\n  AND price_chf > 0\n  AND billing_cycle = 'one-time'\nGROUP BY 1\nORDER BY 1 ASC;",
+          "timeColumns": [
+            "time"
+          ],
+          "refId": "B"
+        }
+      ],
+      "title": "Booked income by month",
+      "type": "timeseries"
+    }
+  ],
+  "refresh": "1h",
+  "schemaVersion": 39,
+  "style": "dark",
+  "tags": [
+    "mycvplanner",
+    "platform"
+  ],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-24M",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "Platform Business Metrics",
+  "uid": "platform-business-metrics",
+  "version": 1,
+  "weekStart": ""
+}

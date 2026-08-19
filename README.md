@@ -11,7 +11,29 @@ docker compose pull
 docker compose up -d
 ```
 
+The stack provisions:
+
+- Grafana itself
+- Prometheus for time-series storage
+- Node Exporter for Debian host metrics
+- A read-only SQLite connection to the platform database for business dashboards
+
 Grafana is exposed on `0.0.0.0:3300` and is intended to be accessed through the GNOME edge proxy over HTTPS.
+
+## Platform connection
+
+Set `MYCVPLANNER_PLATFORM_DB_PATH` in `.env` to the platform SQLite database on the Debian host. The default expected path is:
+
+```bash
+/home/rob/Python/mycvplanner-platform/db.sqlite3
+```
+
+Grafana mounts that database read-only and provisions a `Platform SQLite` datasource. The business dashboards query `auth_user` and `home_purchaserecord` directly, so historical user growth and booked revenue render immediately from existing platform data.
+
+## Provisioned dashboards
+
+- `Platform Business Metrics`
+- `Debian Host Health`
 
 ## Edge nginx snapshot
 

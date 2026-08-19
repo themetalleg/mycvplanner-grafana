@@ -1,0 +1,1 @@
+This directory is intentionally present so Grafana's plugin provisioning scan does not log a missing-directory error.
