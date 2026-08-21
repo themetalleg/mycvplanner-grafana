@@ -19,7 +19,91 @@
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
   "id": null,
-  "links": [],
+  "links": [
+    {
+      "asDropdown": false,
+      "icon": "heart-rate",
+      "includeVars": false,
+      "keepTime": true,
+      "tags": [],
+      "targetBlank": false,
+      "title": "Host Health",
+      "tooltip": "Open Debian Host Health",
+      "type": "link",
+      "url": "/d/debian-host-health/debian-host-health"
+    },
+    {
+      "asDropdown": false,
+      "icon": "apps",
+      "includeVars": false,
+      "keepTime": true,
+      "tags": [],
+      "targetBlank": false,
+      "title": "Operations Overview",
+      "tooltip": "Open Service Operations Overview",
+      "type": "link",
+      "url": "/d/service-operations-overview/service-operations-overview"
+    },
+    {
+      "asDropdown": false,
+      "icon": "logs",
+      "includeVars": false,
+      "keepTime": true,
+      "tags": [],
+      "targetBlank": false,
+      "title": "Logs Overview",
+      "tooltip": "Open Service Logs Overview",
+      "type": "link",
+      "url": "/d/service-logs-overview/service-logs-overview"
+    },
+    {
+      "asDropdown": false,
+      "icon": "server-alt",
+      "includeVars": false,
+      "keepTime": true,
+      "tags": [],
+      "targetBlank": false,
+      "title": "Business Metrics",
+      "tooltip": "Open Platform Business Metrics dashboard",
+      "type": "link",
+      "url": "/d/platform-business-metrics/platform-business-metrics"
+    },
+    {
+      "asDropdown": false,
+      "icon": "server-alt",
+      "includeVars": false,
+      "keepTime": true,
+      "tags": [],
+      "targetBlank": false,
+      "title": "Platform",
+      "tooltip": "Open Platform Service dashboard",
+      "type": "link",
+      "url": "/d/platform-service/platform-service"
+    },
+    {
+      "asDropdown": false,
+      "includeVars": false,
+      "keepTime": true,
+      "tags": [],
+      "targetBlank": false,
+      "title": "API",
+      "tooltip": "Open API Service dashboard",
+      "type": "link",
+      "url": "/d/api-service/api-service"
+    },
+    {
+      "asDropdown": false,
+      "icon": "envelope",
+      "includeVars": false,
+      "keepTime": true,
+      "tags": [],
+      "targetBlank": false,
+      "title": "Newsletter",
+      "tooltip": "Open Newsletter Service dashboard",
+      "type": "link",
+      "url": "/d/newsletter-service/newsletter-service"
+    }
+  ],
   "liveNow": false,
   "panels": [
     {
@@ -609,6 +693,6 @@
   "timezone": "browser",
   "title": "Platform Business Metrics",
   "uid": "platform-business-metrics",
-  "version": 1,
+  "version": 2,
   "weekStart": ""
 }

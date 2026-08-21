@@ -7,16 +7,55 @@ services:
       - .env
     environment:
       GF_INSTALL_PLUGINS: ${GF_INSTALL_PLUGINS:-frser-sqlite-datasource}
+      GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH: /etc/grafana/provisioning/dashboards/mycvplanner/service-operations-overview.json
     ports:
       - "3300:3000"
     depends_on:
       - prometheus
+      - loki
     volumes:
       - grafana-data:/var/lib/grafana
       - ./provisioning:/etc/grafana/provisioning:ro
       - ${MYCVPLANNER_PLATFORM_DB_PATH:-/home/rob/Python/mycvplanner-platform/db.sqlite3}:/var/lib/mycvplanner-platform/db.sqlite3:ro
       - ./deploy/branding/grafana-favicon-yellow/fav32.png:/usr/share/grafana/public/build/img/fav32.png:ro
       - ./deploy/branding/grafana-favicon-yellow/apple-touch-icon.png:/usr/share/grafana/public/build/img/apple-touch-icon.png:ro
+
+  loki:
+    image: grafana/loki:3.1.1
+    container_name: mycvplanner-loki
+    restart: unless-stopped
+    command:
+      - -config.file=/etc/loki/local-config.yml
+    volumes:
+      - ./provisioning/loki/loki.yml:/etc/loki/local-config.yml:ro
+      - loki-data:/loki
+
+  promtail:
+    image: grafana/promtail:3.1.1
+    container_name: mycvplanner-promtail
+    restart: unless-stopped
+    command:
+      - -config.file=/etc/promtail/config.yml
+    depends_on:
+      - loki
+    volumes:
+      - ./provisioning/promtail/promtail.yml:/etc/promtail/config.yml:ro
+      - /run/log/journal:/run/log/journal:ro
+      - /var/log/journal:/var/log/journal:ro
+      - /etc/machine-id:/etc/machine-id:ro
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+
+  blackbox-exporter:
+    image: prom/blackbox-exporter:v0.25.0
+    container_name: mycvplanner-blackbox-exporter
+    restart: unless-stopped
+    command:
+      - --config.file=/etc/blackbox_exporter/config.yml
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    volumes:
+      - ./provisioning/blackbox/blackbox.yml:/etc/blackbox_exporter/config.yml:ro
 
   prometheus:
     image: prom/prometheus:v2.54.1
@@ -31,6 +70,7 @@ services:
       - prometheus-data:/prometheus
     depends_on:
       - node-exporter
+      - blackbox-exporter
 
   node-exporter:
     image: prom/node-exporter:v1.8.2
@@ -44,4 +84,5 @@ services:
 
 volumes:
   grafana-data:
+  loki-data:
   prometheus-data:

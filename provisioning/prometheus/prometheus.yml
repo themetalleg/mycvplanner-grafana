@@ -7,3 +7,29 @@ scrape_configs:
     static_configs:
       - targets:
           - node-exporter:9100
+
+  - job_name: service-tcp-probe
+    metrics_path: /probe
+    params:
+      module:
+        - tcp_connect
+    static_configs:
+      - targets:
+          - mycvplanner.com:443
+        labels:
+          service: platform
+      - targets:
+          - api.mycvplanner.com:443
+        labels:
+          service: api
+      - targets:
+          - newsletter.mycvplanner.com:443
+        labels:
+          service: newsletter
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: blackbox-exporter:9115
