@@ -19,6 +19,10 @@ scrape_configs:
         labels:
           service: platform
       - targets:
+          - dev.mycvplanner.com:443
+        labels:
+          service: platform-dev
+      - targets:
           - api.mycvplanner.com:443
         labels:
           service: api

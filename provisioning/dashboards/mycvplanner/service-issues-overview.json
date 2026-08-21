@@ -140,6 +140,18 @@
           "color": {
             "mode": "thresholds"
           },
+          "mappings": [
+            {
+              "options": {
+                "0": {
+                  "index": 0,
+                  "text": "No issues"
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "noValue": "No issues",
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -149,20 +161,21 @@
               },
               {
                 "color": "orange",
-                "value": 20
+                "value": 1
               },
               {
                 "color": "red",
-                "value": 100
+                "value": 5
               }
             ]
-          }
+          },
+          "unit": "none"
         },
         "overrides": []
       },
       "gridPos": {
         "h": 4,
-        "w": 6,
+        "w": 24,
         "x": 0,
         "y": 0
       },
@@ -184,198 +197,12 @@
       "pluginVersion": "11.1.0",
       "targets": [
         {
-          "expr": "sum(count_over_time({service=\"platform\"}[15m]))",
+          "expr": "sum(count_over_time({service=~\"platform|platform-dev|api|newsletter|newsletter-forwarder\"} |~ \"(?i)(^|\\\\s)(warn(?:ing)?|exception|traceback|panic|fatal|critical|error)(\\\\s|:)\" [15m])) or vector(0)",
           "queryType": "range",
           "refId": "A"
         }
       ],
-      "title": "Platform logs (15m)",
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "loki",
-        "uid": "loki"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "orange",
-                "value": 20
-              },
-              {
-                "color": "red",
-                "value": 100
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 6,
-        "x": 6,
-        "y": 0
-      },
-      "id": 2,
-      "options": {
-        "colorMode": "background",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "textMode": "value"
-      },
-      "pluginVersion": "11.1.0",
-      "targets": [
-        {
-          "expr": "sum(count_over_time({service=\"api\"}[15m]))",
-          "queryType": "range",
-          "refId": "A"
-        }
-      ],
-      "title": "API logs (15m)",
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "loki",
-        "uid": "loki"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "orange",
-                "value": 20
-              },
-              {
-                "color": "red",
-                "value": 100
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 6,
-        "x": 12,
-        "y": 0
-      },
-      "id": 3,
-      "options": {
-        "colorMode": "background",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "textMode": "value"
-      },
-      "pluginVersion": "11.1.0",
-      "targets": [
-        {
-          "expr": "sum(count_over_time({service=~\"newsletter|newsletter-forwarder\"}[15m]))",
-          "queryType": "range",
-          "refId": "A"
-        }
-      ],
-      "title": "Newsletter logs (15m)",
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "loki",
-        "uid": "loki"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "orange",
-                "value": 1
-              },
-              {
-                "color": "red",
-                "value": 5
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 6,
-        "x": 18,
-        "y": 0
-      },
-      "id": 4,
-      "options": {
-        "colorMode": "background",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "textMode": "value"
-      },
-      "pluginVersion": "11.1.0",
-      "targets": [
-        {
-          "expr": "sum(count_over_time({service=~\"platform|platform-dev|api|newsletter|newsletter-forwarder\"} |~ \"(?i)(exception|traceback|\\bpanic\\b|\\bfatal\\b|\\bcritical\\b|\\berror\\b[:\\s])\" [15m]))",
-          "queryType": "range",
-          "refId": "A"
-        }
-      ],
-      "title": "All service errors (15m)",
+      "title": "All service issues (15m)",
       "type": "stat"
     },
     {
@@ -427,11 +254,11 @@
       },
       "gridPos": {
         "h": 8,
-        "w": 24,
+        "w": 12,
         "x": 0,
         "y": 4
       },
-      "id": 5,
+      "id": 2,
       "options": {
         "legend": {
           "displayMode": "list",
@@ -446,19 +273,90 @@
       "pluginVersion": "11.1.0",
       "targets": [
         {
-          "expr": "sum by (service) (rate({service=~\"platform|platform-dev|api|newsletter|newsletter-forwarder\"}[5m]))",
+          "expr": "sum by (service) (rate({service=~\"platform|platform-dev|api|newsletter|newsletter-forwarder\"} |~ \"(?i)(^|\\s)(warn(?:ing)?|exception|traceback|panic|fatal|critical|error)(\\s|:)\" [5m]))",
           "legendFormat": "{{service}}",
           "queryType": "range",
           "refId": "A"
-        },
-        {
-          "expr": "sum by (service) (rate({service=~\"platform|platform-dev|api|newsletter|newsletter-forwarder\"} |~ \"(?i)(exception|traceback|\\bpanic\\b|\\bfatal\\b|\\bcritical\\b|\\berror\\b[:\\s])\" [5m]))",
-          "legendFormat": "{{service}} errors",
-          "queryType": "range",
-          "refId": "B"
         }
       ],
-      "title": "Log and error rate by service",
+      "title": "Issue volume by service",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "loki"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisPlacement": "auto",
+            "drawStyle": "line",
+            "fillOpacity": 12,
+            "gradientMode": "opacity",
+            "lineInterpolation": "smooth",
+            "lineWidth": 2,
+            "pointSize": 4,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "lines/s"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 4
+      },
+      "id": 3,
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "11.1.0",
+      "targets": [
+        {
+          "expr": "sum by (service) (rate({service=~\"platform|platform-dev|api|newsletter|newsletter-forwarder\"} |~ \"(?i)(^|\\s)(warn(?:ing)?|exception|traceback|panic|fatal|critical|error)(\\s|:)\" [5m]))",
+          "legendFormat": "{{service}}",
+          "queryType": "range",
+          "refId": "A"
+        }
+      ],
+      "title": "Issue rate by service",
       "type": "timeseries"
     },
     {
@@ -471,12 +369,12 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 8,
-        "w": 8,
+        "h": 10,
+        "w": 24,
         "x": 0,
         "y": 12
       },
-      "id": 6,
+      "id": 4,
       "options": {
         "dedupStrategy": "none",
         "enableLogDetails": true,
@@ -490,86 +388,12 @@
       "pluginVersion": "11.1.0",
       "targets": [
         {
-          "expr": "{service=\"platform\"}",
+          "expr": "{service=~\"platform|platform-dev|api|newsletter|newsletter-forwarder\"} |~ \"(?i)(^|\\s)(warn(?:ing)?|exception|traceback|panic|fatal|critical|error)(\\s|:)\"",
           "queryType": "range",
           "refId": "A"
         }
       ],
-      "title": "Recent platform logs",
-      "type": "logs"
-    },
-    {
-      "datasource": {
-        "type": "loki",
-        "uid": "loki"
-      },
-      "fieldConfig": {
-        "defaults": {},
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 8,
-        "x": 8,
-        "y": 12
-      },
-      "id": 7,
-      "options": {
-        "dedupStrategy": "none",
-        "enableLogDetails": true,
-        "prettifyLogMessage": false,
-        "showCommonLabels": false,
-        "showLabels": true,
-        "showTime": true,
-        "sortOrder": "Descending",
-        "wrapLogMessage": true
-      },
-      "pluginVersion": "11.1.0",
-      "targets": [
-        {
-          "expr": "{service=\"api\"}",
-          "queryType": "range",
-          "refId": "A"
-        }
-      ],
-      "title": "Recent API logs",
-      "type": "logs"
-    },
-    {
-      "datasource": {
-        "type": "loki",
-        "uid": "loki"
-      },
-      "fieldConfig": {
-        "defaults": {},
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 8,
-        "x": 16,
-        "y": 12
-      },
-      "id": 8,
-      "options": {
-        "dedupStrategy": "none",
-        "enableLogDetails": true,
-        "prettifyLogMessage": false,
-        "showCommonLabels": false,
-        "showLabels": true,
-        "showTime": true,
-        "sortOrder": "Descending",
-        "wrapLogMessage": true
-      },
-      "pluginVersion": "11.1.0",
-      "targets": [
-        {
-          "expr": "{service=~\"newsletter|newsletter-forwarder\"}",
-          "queryType": "range",
-          "refId": "A"
-        }
-      ],
-      "title": "Recent newsletter logs",
+      "title": "Recent service issues",
       "type": "logs"
     }
   ],
@@ -577,8 +401,8 @@
   "schemaVersion": 39,
   "style": "dark",
   "tags": [
-    "logs",
-    "services"
+    "services",
+    "issues"
   ],
   "templating": {
     "list": []
@@ -589,8 +413,8 @@
   },
   "timepicker": {},
   "timezone": "browser",
-  "title": "Service Logs Overview",
-  "uid": "service-logs-overview",
-  "version": 8,
+  "title": "Service Issues Overview",
+  "uid": "service-issues-overview",
+  "version": 1,
   "weekStart": ""
 }

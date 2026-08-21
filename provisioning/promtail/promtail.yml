@@ -18,7 +18,7 @@ scrape_configs:
         host: debian
     relabel_configs:
       - source_labels: ['__journal__systemd_unit']
-        regex: 'mycvplanner-platform\.service|mycvplanner-api\.service|mycvplanner-keila-unsubscribe-forwarder\.service'
+        regex: 'mycvplanner-platform\.service|mycvplanner-platform-dev\.service|mycvplanner-api\.service|mycvplanner-keila-unsubscribe-forwarder\.service'
         action: keep
       - source_labels: ['__journal__systemd_unit']
         target_label: unit
@@ -30,6 +30,10 @@ scrape_configs:
         regex: 'mycvplanner-platform\.service'
         target_label: service
         replacement: platform
+      - source_labels: ['__journal__systemd_unit']
+        regex: 'mycvplanner-platform-dev\.service'
+        target_label: service
+        replacement: platform-dev
       - source_labels: ['__journal__systemd_unit']
         regex: 'mycvplanner-api\.service'
         target_label: service

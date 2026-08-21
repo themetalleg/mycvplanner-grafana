@@ -16,7 +16,7 @@ The stack provisions:
 - Grafana itself
 - Prometheus for time-series storage
 - Node Exporter for Debian host metrics
-- Blackbox Exporter for API, platform, and newsletter reachability probes
+- Blackbox Exporter for API, platform, platform-dev, and newsletter reachability probes
 - Loki for log storage
 - Promtail for journald and Docker log collection
 - A read-only SQLite connection to the platform database for business dashboards
@@ -38,16 +38,26 @@ Grafana mounts that database read-only and provisions a `Platform SQLite` dataso
 - `Platform Business Metrics`
 - `Debian Host Health`
 - `Service Operations Overview`
+- `Service Issues Overview`
 - `Service Logs Overview`
 - `Platform Service`
+- `Platform Dev Service`
 - `API Service`
 - `Newsletter Service`
+
+## Production and development monitoring split
+
+- Production platform target: `mycvplanner.com:443` (service label `platform`)
+- Development platform target: `dev.mycvplanner.com:443` (service label `platform-dev`)
+
+Both targets are probed by Prometheus and shown in the operations overview cards.
 
 ## Log coverage
 
 The log pipeline collects:
 
 - journald logs for `mycvplanner-platform.service`
+- journald logs for `mycvplanner-platform-dev.service`
 - journald logs for `mycvplanner-api.service`
 - journald logs for `mycvplanner-keila-unsubscribe-forwarder.service`
 - Docker logs for the newsletter `keila` and `postgres` containers

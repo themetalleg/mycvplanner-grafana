@@ -58,6 +58,18 @@
     },
     {
       "asDropdown": false,
+      "icon": "exclamation-triangle",
+      "includeVars": false,
+      "keepTime": true,
+      "tags": [],
+      "targetBlank": false,
+      "title": "Issues",
+      "tooltip": "Open Service Issues Overview",
+      "type": "link",
+      "url": "/d/service-issues-overview/service-issues-overview"
+    },
+    {
+      "asDropdown": false,
       "icon": "server-alt",
       "includeVars": false,
       "keepTime": true,
@@ -102,6 +114,18 @@
       "tooltip": "Open Newsletter Service dashboard",
       "type": "link",
       "url": "/d/newsletter-service/newsletter-service"
+    },
+    {
+      "asDropdown": false,
+      "icon": "server-alt",
+      "includeVars": false,
+      "keepTime": true,
+      "tags": [],
+      "targetBlank": false,
+      "title": "Platform Dev",
+      "tooltip": "Open Platform Dev Service dashboard",
+      "type": "link",
+      "url": "/d/platform-dev-service/platform-dev-service"
     }
   ],
   "liveNow": false,

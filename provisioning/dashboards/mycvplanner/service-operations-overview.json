@@ -58,6 +58,18 @@
     },
     {
       "asDropdown": false,
+      "icon": "exclamation-triangle",
+      "includeVars": false,
+      "keepTime": true,
+      "tags": [],
+      "targetBlank": false,
+      "title": "Issues",
+      "tooltip": "Open Service Issues Overview",
+      "type": "link",
+      "url": "/d/service-issues-overview/service-issues-overview"
+    },
+    {
+      "asDropdown": false,
       "icon": "server-alt",
       "includeVars": false,
       "keepTime": true,
@@ -102,6 +114,18 @@
       "tooltip": "Open Newsletter Service dashboard",
       "type": "link",
       "url": "/d/newsletter-service/newsletter-service"
+    },
+    {
+      "asDropdown": false,
+      "icon": "server-alt",
+      "includeVars": false,
+      "keepTime": true,
+      "tags": [],
+      "targetBlank": false,
+      "title": "Platform Dev",
+      "tooltip": "Open Platform Dev Service dashboard",
+      "type": "link",
+      "url": "/d/platform-dev-service/platform-dev-service"
     }
   ],
   "liveNow": false,
@@ -141,6 +165,15 @@
         "y": 0
       },
       "id": 11,
+      "links": [
+        {
+          "includeVars": false,
+          "keepTime": true,
+          "targetBlank": false,
+          "title": "Open Host Health dashboard",
+          "url": "/d/debian-host-health/debian-host-health"
+        }
+      ],
       "options": {
         "colorMode": "background",
         "graphMode": "none",
@@ -214,6 +247,15 @@
         "y": 0
       },
       "id": 1,
+      "links": [
+        {
+          "includeVars": false,
+          "keepTime": true,
+          "targetBlank": false,
+          "title": "Open Platform dashboard",
+          "url": "/d/platform-service/platform-service"
+        }
+      ],
       "options": {
         "colorMode": "background",
         "graphMode": "none",
@@ -288,6 +330,15 @@
         "y": 0
       },
       "id": 2,
+      "links": [
+        {
+          "includeVars": false,
+          "keepTime": true,
+          "targetBlank": false,
+          "title": "Open API dashboard",
+          "url": "/d/api-service/api-service"
+        }
+      ],
       "options": {
         "colorMode": "background",
         "graphMode": "none",
@@ -362,6 +413,15 @@
         "y": 0
       },
       "id": 3,
+      "links": [
+        {
+          "includeVars": false,
+          "keepTime": true,
+          "targetBlank": false,
+          "title": "Open Newsletter dashboard",
+          "url": "/d/newsletter-service/newsletter-service"
+        }
+      ],
       "options": {
         "colorMode": "background",
         "graphMode": "none",
@@ -390,8 +450,8 @@
     },
     {
       "datasource": {
-        "type": "loki",
-        "uid": "loki"
+        "type": "prometheus",
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -403,7 +463,11 @@
               "options": {
                 "0": {
                   "index": 0,
-                  "text": "No issues"
+                  "text": "Down"
+                },
+                "1": {
+                  "index": 1,
+                  "text": "Up"
                 }
               },
               "type": "value"
@@ -414,16 +478,12 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
+                "color": "red",
                 "value": null
               },
               {
-                "color": "orange",
+                "color": "green",
                 "value": 1
-              },
-              {
-                "color": "red",
-                "value": 5
               }
             ]
           },
@@ -438,6 +498,15 @@
         "y": 0
       },
       "id": 4,
+      "links": [
+        {
+          "includeVars": false,
+          "keepTime": true,
+          "targetBlank": false,
+          "title": "Open Platform Dev dashboard",
+          "url": "/d/platform-dev-service/platform-dev-service"
+        }
+      ],
       "options": {
         "colorMode": "background",
         "graphMode": "none",
@@ -455,12 +524,13 @@
       "pluginVersion": "11.1.0",
       "targets": [
         {
-          "expr": "sum(count_over_time({service=\"platform\"} |~ \"(?i)(^|\\s)(warn(?:ing)?|exception|traceback|panic|fatal|critical|error)(\\s|:)\" [15m])) or vector(0)",
-          "queryType": "range",
+          "expr": "max(last_over_time(probe_success{job=\"service-tcp-probe\",service=\"platform-dev\"}[2m]))",
+          "instant": true,
+          "legendFormat": "Platform Dev",
           "refId": "A"
         }
       ],
-      "title": "Platform issues (15m)",
+      "title": "Platform Dev reachable",
       "type": "stat"
     },
     {
@@ -508,11 +578,20 @@
       },
       "gridPos": {
         "h": 4,
-        "w": 3,
+        "w": 6,
         "x": 18,
         "y": 0
       },
       "id": 5,
+      "links": [
+        {
+          "includeVars": false,
+          "keepTime": true,
+          "targetBlank": false,
+          "title": "Open Service Issues Overview dashboard",
+          "url": "/d/service-issues-overview/service-issues-overview"
+        }
+      ],
       "options": {
         "colorMode": "background",
         "graphMode": "none",
@@ -530,87 +609,12 @@
       "pluginVersion": "11.1.0",
       "targets": [
         {
-          "expr": "sum(count_over_time({service=\"api\"} |~ \"(?i)(^|\\s)(warn(?:ing)?|exception|traceback|panic|fatal|critical|error)(\\s|:)\" [15m])) or vector(0)",
+          "expr": "sum(count_over_time({service=~\"platform|platform-dev|api|newsletter|newsletter-forwarder\"} |~ \"(?i)(^|\\\\s)(warn(?:ing)?|exception|traceback|panic|fatal|critical|error)(\\\\s|:)\" [15m])) or vector(0)",
           "queryType": "range",
           "refId": "A"
         }
       ],
-      "title": "API issues (15m)",
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "loki",
-        "uid": "loki"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [
-            {
-              "options": {
-                "0": {
-                  "index": 0,
-                  "text": "No issues"
-                }
-              },
-              "type": "value"
-            }
-          ],
-          "noValue": "No issues",
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "orange",
-                "value": 1
-              },
-              {
-                "color": "red",
-                "value": 5
-              }
-            ]
-          },
-          "unit": "none"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 3,
-        "x": 21,
-        "y": 0
-      },
-      "id": 6,
-      "options": {
-        "colorMode": "background",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "textMode": "value"
-      },
-      "pluginVersion": "11.1.0",
-      "targets": [
-        {
-          "expr": "sum(count_over_time({service=~\"newsletter|newsletter-forwarder\"} |~ \"(?i)(^|\\s)(warn(?:ing)?|exception|traceback|panic|fatal|critical|error)(\\s|:)\" [15m])) or vector(0)",
-          "queryType": "range",
-          "refId": "A"
-        }
-      ],
-      "title": "Newsletter issues (15m)",
+      "title": "All service issues (15m)",
       "type": "stat"
     },
     {
@@ -757,7 +761,7 @@
       "pluginVersion": "11.1.0",
       "targets": [
         {
-          "expr": "sum by (service) (rate({service=~\"platform|api|newsletter|newsletter-forwarder\"} |~ \"(?i)(^|\\s)(warn(?:ing)?|exception|traceback|panic|fatal|critical|error)(\\s|:)\" [5m]))",
+          "expr": "sum by (service) (rate({service=~\"platform|platform-dev|api|newsletter|newsletter-forwarder\"} |~ \"(?i)(^|\\s)(warn(?:ing)?|exception|traceback|panic|fatal|critical|error)(\\s|:)\" [5m]))",
           "legendFormat": "{{service}}",
           "queryType": "range",
           "refId": "A"
@@ -834,7 +838,7 @@
       "pluginVersion": "11.1.0",
       "targets": [
         {
-          "expr": "sum by (service) (rate({service=~\"platform|api|newsletter|newsletter-forwarder\"} |~ \"(?i)(^|\\s)(warn(?:ing)?|exception|traceback|panic|fatal|critical|error)(\\s|:)\" [5m]))",
+          "expr": "sum by (service) (rate({service=~\"platform|platform-dev|api|newsletter|newsletter-forwarder\"} |~ \"(?i)(^|\\s)(warn(?:ing)?|exception|traceback|panic|fatal|critical|error)(\\s|:)\" [5m]))",
           "legendFormat": "{{service}}",
           "queryType": "range",
           "refId": "A"
@@ -872,7 +876,7 @@
       "pluginVersion": "11.1.0",
       "targets": [
         {
-          "expr": "{service=~\"platform|api|newsletter|newsletter-forwarder\"} |~ \"(?i)(^|\\s)(warn(?:ing)?|exception|traceback|panic|fatal|critical|error)(\\s|:)\"",
+          "expr": "{service=~\"platform|platform-dev|api|newsletter|newsletter-forwarder\"} |~ \"(?i)(^|\\s)(warn(?:ing)?|exception|traceback|panic|fatal|critical|error)(\\s|:)\"",
           "queryType": "range",
           "refId": "A"
         }
@@ -899,6 +903,6 @@
   "timezone": "browser",
   "title": "Service Operations Overview",
   "uid": "service-operations-overview",
-  "version": 12,
+  "version": 13,
   "weekStart": ""
 }
